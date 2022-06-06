@@ -4,7 +4,11 @@ import PlaceDetails from '../PlaceDetails/PlaceDetails'
 
 import useStyles from './styles'
 
-const List: FC = () => {
+interface ListProps {
+    places: any
+}
+
+const List: FC<ListProps> = ({places}) => {
     const classes = useStyles()
     const [type, setType] = useState('restaurants')
     const [rating, setRating] = useState('restaurants')
@@ -16,12 +20,6 @@ const List: FC = () => {
     const changeRating = (e: ChangeEvent<any>) => {
         setRating(e.target.value)
     }
-
-    const places = [
-        {name: 'Cool Place', },
-        {name: 'Cool Cake', },
-        {name: 'Cool Steak', },
-    ]
 
     return (
         <div className={classes.container}>
@@ -45,7 +43,7 @@ const List: FC = () => {
             </FormControl>
             <Grid container spacing={3} className={classes.list}>
                 {
-                    places?.map((place, idx) => (
+                    places?.map((place: any, idx: number) => (
                         <Grid item key={idx} xs={12}>
                             <PlaceDetails place={place}/>
                         </Grid>

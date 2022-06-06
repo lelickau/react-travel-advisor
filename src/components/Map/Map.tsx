@@ -4,10 +4,25 @@ import { useMediaQuery } from '@material-ui/core'
 
 import useStyles from './styles'
 
-const Map: FC = () => {
+interface MapProps {
+    setCoordinates: any;
+    setBounds: React.Dispatch<React.SetStateAction<any>>;
+    coordinates: any;
+}
+
+const Map: FC<MapProps> = ({setCoordinates, setBounds, coordinates}) => {
     const classes = useStyles()
     const isMobile = useMediaQuery('(min-width: 600px)')
-    const coordinates = {lat: 0, lng: 0}
+
+    const changeCoordinates = (e: any) => {
+        console.log(e)
+        setCoordinates({
+            lat: e.center.lat, lng: e.center.lng
+        })
+        setBounds({
+            ne: e.marginBounds.ne, sw: e.marginBounds.sw
+        })
+    }
 
     return (
         <div className={classes.mapContainer}>
@@ -18,7 +33,7 @@ const Map: FC = () => {
                 defaultZoom={14}
                 margin={[50,50,50,50]}
                 // options={''}
-                // onChange={''}
+                onChange={changeCoordinates}
                 // onChildClick={''}
             >
 
