@@ -22,9 +22,12 @@ interface IPlace {
 }
 interface PlaceDetailsProps {
     place: IPlace;
+    selected: boolean;
+    refProp: any;
 }
 
-const PlaceDetails: FC<PlaceDetailsProps> = ({place}) => {
+const PlaceDetails: FC<PlaceDetailsProps> = ({place, selected, refProp}) => {
+    if (selected) refProp?.current?.scrollIntoView({ behavior: 'smooth', block: 'start' })
     const classes = useStyles()
     return (
         <Card elevation={6}>
@@ -51,8 +54,8 @@ const PlaceDetails: FC<PlaceDetailsProps> = ({place}) => {
                         {place.ranking}
                     </Typography>
                 </Box>
-                {place?.awards?.map((award: any) => (
-                    <Box display="flex" justifyContent="space-between" my={1} alignItems="center">
+                {place?.awards?.map((award: any, idx: number) => (
+                    <Box key={idx} display="flex" justifyContent="space-between" my={1} alignItems="center">
                         <img src={award.images.small} />
                         <Typography variant="subtitle2" color="textSecondary">{award.display_name}</Typography>
                     </Box>
